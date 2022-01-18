@@ -16,8 +16,6 @@ pipeline {
 	}
 
 	stages {
-	    stage("prep") {
-	    }
 		stage("test: baseline (jdk8)") {
 			when {
 				beforeAgent(true)
