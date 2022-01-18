@@ -19,7 +19,9 @@ pipeline {
                 label 'data'
             }
 	        steps {
-	            props = readProperties file: 'ci/pipeline.properties'
+	            script {
+	                props = readProperties file: 'ci/pipeline.properties'
+	            }
 	        }
 	    }
 		stage("test: baseline (jdk8)") {
