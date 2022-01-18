@@ -1,3 +1,5 @@
+def props = [:]
+
 pipeline {
 	agent none
 
@@ -6,16 +8,20 @@ pipeline {
 		upstream(upstreamProjects: "spring-data-commons/main", threshold: hudson.model.Result.SUCCESS)
 	}
 
-	environment {
-	    props = readProperties file: 'ci/pipeline.properties'
-	}
-
 	options {
 		disableConcurrentBuilds()
 		buildDiscarder(logRotator(numToKeepStr: '14'))
 	}
 
 	stages {
+	    stage("pre") {
+            agent {
+                label 'data'
+            }
+	        steps {
+	            props = readProperties file: 'ci/pipeline.properties'
+	        }
+	    }
 		stage("test: baseline (jdk8)") {
 			when {
 				beforeAgent(true)
